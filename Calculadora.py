@@ -16,12 +16,17 @@ def lista_tecidos(modelo):
 def lista_acess():
     for c, modelo in enumerate(custo_acess, start=1):
         print(f'[{c}] {modelo}')
-        print('[0] Sair')
+    print('[0] Sair')
 def calcula_acess(acessorio, larg):
     if larg < med_min:
         return custo_acess[acessorio] * med_min * tx_wpp
     else:
         return  custo_acess[acessorio] * larg * tx_wpp
+def mostra_orcamento(persiana,tecido,medida_larg,medida_alt,total_acess, valor):
+    print(f'{persiana} {tecido} Largura {medida_larg:.2f} x {medida_alt:.2f} com ', end='')
+    for v in total_acess:
+        print(v, end=' ')
+    print(f': R$ {valor:.2f}')
 
 orcamento['Cliente'] = input(str('Nome do Cliente: '))
 lista_persinas()
@@ -41,7 +46,6 @@ while True:
     lista_persinas()
     mod_persiana = str(input('Modelo da Persiana: '))
 
-orcamento['Persiana'] = mod_persiana
 linha_separa()
 if mod_persiana == 'Rolo' or mod_persiana == 'Romana':
     lista_tecidos(mod_persiana)
@@ -63,7 +67,6 @@ if mod_persiana == 'Rolo' or mod_persiana == 'Romana':
         lista_tecidos(mod_persiana)
         mod_tecido = str(input('Modelo do Tecido: '))
 
-    orcamento['Tecido'] = mod_tecido
 
 if mod_persiana == 'Rolo' or mod_persiana == 'Romana':
     linha_separa()
@@ -78,9 +81,6 @@ if mod_persiana == 'Rolo' or mod_persiana == 'Romana':
     print(f'Persiana {mod_persiana}: {mod_tecido} Largura {larg:.2f} x {alt:.2f} Altura')
     print(f'R$ {valor_persiana:.2f}')
 
-    orcamento['largura'] = larg
-    orcamento['Altura'] = alt
-
     linha_separa()
     lista_acess()
     acessorios_incluidos = list()
@@ -93,14 +93,17 @@ if mod_persiana == 'Rolo' or mod_persiana == 'Romana':
                 acessorios_incluidos.append('Bando Rolo')
                 valor_acess = calcula_acess(acessorios_incluidos[-1], larg)
                 valor_persiana += valor_acess
+                mostra_orcamento(mod_persiana,mod_tecido,larg,alt,acessorios_incluidos,valor_persiana)
             elif acessorio == '2':
                 acessorios_incluidos.append('Bando Double')
                 valor_acess = calcula_acess(acessorios_incluidos[-1], larg)
                 valor_persiana += valor_acess
+                mostra_orcamento(mod_persiana,mod_tecido,larg,alt,acessorios_incluidos,valor_persiana)
             elif acessorio == '3':
                 acessorios_incluidos.append('Base Cônica')
                 valor_acess = calcula_acess(acessorios_incluidos[-1], larg)
                 valor_persiana += valor_acess
+                mostra_orcamento(mod_persiana,mod_tecido,larg,alt,acessorios_incluidos,valor_persiana)
             elif acessorio == '4':
                 acessorios_incluidos.append('Guias Laterais')
                 if mod_persiana != 'Rolo' or mod_tecido != 'Blackout':
@@ -108,14 +111,22 @@ if mod_persiana == 'Rolo' or mod_persiana == 'Romana':
                 else:
                     valor_acess = ((custo_acess[acessorios_incluidos[-1]] * larg * 2) + (custo_acess[acessorios_incluidos[-1]] * alt * 2)) * tx_wpp
                     valor_persiana += valor_acess
+                    mostra_orcamento(mod_persiana,mod_tecido,larg,alt,acessorios_incluidos,valor_persiana)
             elif acessorio == '5':
                 acessorios_incluidos.append('Motor')
-                valor_acess = custo_acess[acessorios_incluidos[-1]]
+                valor_acess = custo_acess[acessorios_incluidos[-1]] * tx_wpp
                 valor_persiana += valor_acess
+                mostra_orcamento(mod_persiana,mod_tecido,larg,alt,acessorios_incluidos,valor_persiana)
             else:
                 acessorios_incluidos.append('Motor Wi-Fi')
-                valor_acess = custo_acess[acessorios_incluidos[-1]]
+                valor_acess = custo_acess[acessorios_incluidos[-1]] * tx_wpp
                 valor_persiana += valor_acess
+                mostra_orcamento(mod_persiana,mod_tecido,larg,alt,acessorios_incluidos,valor_persiana)
+
+    orcamento['Persiana'] = mod_persiana
+    orcamento['Tecido'] = mod_tecido
+    orcamento['largura'] = larg
+    orcamento['Altura'] = alt
     orcamento['Acessórios'] = acessorios_incluidos
 else:
     print('Modelo Double ainda ainda em desenvolvimento')
