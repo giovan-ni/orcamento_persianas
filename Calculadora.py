@@ -129,4 +129,4 @@ if mod_persiana == 'Rolo' or mod_persiana == 'Romana':
     orcamento['Altura'] = alt
     orcamento['Acessórios'] = acessorios_incluidos
 else:
-    print('Modelo Double ainda ainda em desenvolvimento')
+    print('Modelo Double ainda ainda em desenvolvimento!')

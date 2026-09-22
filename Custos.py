@@ -24,6 +24,6 @@ custo_acess = {
     'Base Cônica' : 65,
     'Guias Laterias': 75,
     'Motor' : 1250,
-    'Motor Wi-fi' : 1350
+    'Motor Wi-Fi' : 1350
 }
 
