@@ -183,7 +183,6 @@ else:
                 valor_persiana += valor_acess
                 mostra_orcamento_double(mod_persiana,larg,alt,acessorios_incluidos,valor_persiana)
 
-
     orcamento['Persiana'] = mod_persiana
     orcamento['largura'] = larg
     orcamento['Altura'] = alt
