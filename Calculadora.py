@@ -1,9 +1,7 @@
 from Custos import*
 
 orcamento = dict()
-print('-' *27)
-print('ORÇAMENTO PERSIANAS SOUZA')
-print('-' *27)
+historico = list()
 
 def linha_separa():
     print('-' *27)
@@ -27,6 +25,15 @@ def mostra_orcamento(persiana,tecido,medida_larg,medida_alt,total_acess, valor):
     for v in total_acess:
         print(v, end=' ')
     print(f': R$ {valor:.2f}')
+def mostra_orcamento_double(persiana,medida_larg,medida_alt,total_acess, valor):
+    print(f'{persiana} Largura {medida_larg:.2f} x {medida_alt:.2f} com ', end='')
+    for v in total_acess:
+        print(v, end=' ')
+    print(f': R$ {valor:.2f}')
+
+linha_separa()
+print('ORÇAMENTO PERSIANAS SOUZA')
+linha_separa()
 
 orcamento['Cliente'] = input(str('Nome do Cliente: '))
 lista_persinas()
@@ -128,5 +135,59 @@ if mod_persiana == 'Rolo' or mod_persiana == 'Romana':
     orcamento['largura'] = larg
     orcamento['Altura'] = alt
     orcamento['Acessórios'] = acessorios_incluidos
+    orcamento['Valor'] = valor_persiana
 else:
-    print('Modelo Double ainda ainda em desenvolvimento!')
+    larg = float(input('Largura(cm): ')) / 100
+    alt = float(input('Altura(cm): ')) / 100
+
+    if larg * alt > med_min:
+        valor_persiana = larg * alt * custo_persianas[mod_persiana] * tx_wpp
+    else:
+        valor_persiana = med_min * custo_persianas[mod_persiana] * tx_wpp
+
+    print(f'Persiana {mod_persiana}: Largura {larg:.2f} x {alt:.2f} Altura')
+    print(f'R$ {valor_persiana:.2f}')
+
+    linha_separa()
+    lista_acess()
+    acessorios_incluidos = list()
+    while True:
+        acessorio = str(input('Acessorio: '))
+        if acessorio == '0':
+            break
+        else:
+            if acessorio == '1':
+                print('Acessório não compatível com o Modelo Double')
+                linha_separa()
+            elif acessorio == '2':
+                acessorios_incluidos.append('Bando Double')
+                valor_acess = calcula_acess(acessorios_incluidos[-1], larg)
+                valor_persiana += valor_acess
+                mostra_orcamento_double(mod_persiana,larg,alt,acessorios_incluidos,valor_persiana)
+                linha_separa()
+            elif acessorio == '3':
+                print('Acessório não compatível com o Modelo Double')
+                linha_separa()
+            elif acessorio == '4':
+                print('Acessório não compatível com o Modelo Double')
+                linha_separa()
+            elif acessorio == '5':
+                acessorios_incluidos.append('Motor')
+                valor_acess = custo_acess[acessorios_incluidos[-1]] * tx_wpp
+                valor_persiana += valor_acess
+                mostra_orcamento_double(mod_persiana,larg,alt,acessorios_incluidos,valor_persiana)
+                linha_separa()
+            else:
+                acessorios_incluidos.append('Motor Wi-Fi')
+                valor_acess = custo_acess[acessorios_incluidos[-1]] * tx_wpp
+                valor_persiana += valor_acess
+                mostra_orcamento_double(mod_persiana,larg,alt,acessorios_incluidos,valor_persiana)
+
+
+    orcamento['Persiana'] = mod_persiana
+    orcamento['largura'] = larg
+    orcamento['Altura'] = alt
+    orcamento['Acessórios'] = acessorios_incluidos
+    orcamento['Valor'] = valor_persiana
+
+historico.append(orcamento)
